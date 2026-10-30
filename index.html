@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff9800">
   <meta charset="UTF-8">
   <title>DondeJoseito FastFood</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#ff9800">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -33,9 +33,7 @@
       overflow-x: auto;
       scroll-behavior: smooth;
     }
-    .carousel::-webkit-scrollbar {
-      display: none;
-    }
+    .carousel::-webkit-scrollbar { display: none; }
     .carousel {
       -ms-overflow-style: none;
       scrollbar-width: none;
@@ -49,13 +47,8 @@
       padding: 10px;
       text-align: center;
     }
-    .item h3 {
-      margin: 0;
-      font-size: 1.1em;
-    }
-    .item p {
-      font-size: 0.9em;
-    }
+    .item h3 { margin: 0; font-size: 1.1em; }
+    .item p { font-size: 0.9em; }
     .select-btn {
       margin-top: 8px;
       padding: 6px 10px;
@@ -65,10 +58,7 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .cantidad {
-      margin-top: 5px;
-      font-size: 0.9em;
-    }
+    .cantidad { margin-top: 5px; font-size: 0.9em; }
 
     #carrito-flotante {
       position: fixed;
@@ -90,10 +80,7 @@
       cursor: pointer;
       border: none;
     }
-
-    #carrito-flotante:active {
-      transform: scale(0.9);
-    }
+    #carrito-flotante:active { transform: scale(0.9); }
 
     #contador-carrito {
       position: absolute;
@@ -111,9 +98,7 @@
       font-weight: bold;
     }
 
-    #pedido {
-      display: none;
-    }
+    #pedido { display: none; }
 
     /* Modal de instalación */
     .modal {
@@ -127,7 +112,6 @@
       background-color: rgba(0,0,0,0.9);
       overflow-y: auto;
     }
-
     .modal-content {
       background: #1a1a1a;
       margin: 5% auto;
@@ -137,33 +121,12 @@
       max-width: 500px;
       color: #fff;
     }
-
-    .modal-header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .modal-header h2 {
-      margin: 10px 0;
-    }
-
-    .modal-body {
-      line-height: 1.6;
-    }
-
-    .modal-body ol {
-      padding-left: 20px;
-    }
-
-    .modal-body li {
-      margin: 10px 0;
-    }
-
-    .modal-footer {
-      text-align: center;
-      margin-top: 20px;
-    }
-
+    .modal-header { text-align: center; margin-bottom: 20px; }
+    .modal-header h2 { margin: 10px 0; }
+    .modal-body { line-height: 1.6; }
+    .modal-body ol { padding-left: 20px; }
+    .modal-body li { margin: 10px 0; }
+    .modal-footer { text-align: center; margin-top: 20px; }
     .btn-modal {
       padding: 12px 24px;
       margin: 5px;
@@ -173,22 +136,9 @@
       font-size: 16px;
       font-weight: bold;
     }
-
-    .btn-primary {
-      background: #ff9800;
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: #666;
-      color: #fff;
-    }
-
-    .btn-success {
-      background: #25D366;
-      color: #fff;
-    }
-
+    .btn-primary { background: #ff9800; color: #fff; }
+    .btn-secondary { background: #666; color: #fff; }
+    .btn-success { background: #25D366; color: #fff; }
     .btn-danger {
       background: #ff4444;
       color: #fff;
@@ -196,7 +146,6 @@
       font-size: 14px;
     }
 
-    /* Modal del carrito */
     .carrito-item {
       background: rgba(255,255,255,0.1);
       padding: 10px;
@@ -206,21 +155,9 @@
       justify-content: space-between;
       align-items: center;
     }
-
-    .carrito-item-info {
-      flex: 1;
-    }
-
-    .carrito-item-nombre {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .carrito-item-cantidad {
-      font-size: 0.9em;
-      color: #ccc;
-    }
-
+    .carrito-item-info { flex: 1; }
+    .carrito-item-nombre { font-weight: bold; margin-bottom: 5px; }
+    .carrito-item-cantidad { font-size: 0.9em; color: #ccc; }
     .carrito-total {
       text-align: right;
       font-size: 1.3em;
@@ -230,7 +167,8 @@
       border-top: 2px solid #ff9800;
     }
 
-    .btn-instalar {
+    /* Botón superior derecho (Instalar/Compartir) */
+    .btn-top-right {
       position: fixed;
       top: 20px;
       right: 20px;
@@ -244,32 +182,35 @@
       cursor: pointer;
       z-index: 1000;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
-    .btn-instalar:active {
-      transform: scale(0.9);
-    }
+    .btn-top-right:active { transform: scale(0.9); }
   </style>
 </head>
 <body>
   <h1>🍔 DondeJoseito FastFood</h1>
   
-  <button class="btn-instalar" onclick="mostrarGuiaInstalacion()" title="Instalar App">📲</button>
+  <!-- Botón dinámico: Instalar o Compartir -->
+  <button class="btn-top-right" id="btn-accion" onclick="accionTopRight()" title="Instalar/Compartir">
+    
+  </button>
   
   <div id="menu"></div>
   
   <button id="carrito-flotante" onclick="abrirCarrito()">
-    
+    🛒
     <div id="contador-carrito">0</div>
   </button>
 
-  <a id="pedido" href="#" target="_blank"> Pedir</a>
+  <a id="pedido" href="#" target="_blank">📲 Pedir</a>
 
-  <!-- Modal de Guía de Instalación -->
+  <!-- Modal de Guía de Instalación iOS -->
   <div id="modal-instalacion" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2> Instalación en iPhone</h2>
+        <h2>📱 Instalación en iPhone</h2>
       </div>
       <div class="modal-body">
         <p>Lamentamos informarte que en dispositivos iPhone no es posible instalar la aplicación automáticamente como en Android, debido a restricciones del sistema iOS.</p>
@@ -294,7 +235,7 @@
   <div id="modal-instalacion-android" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>📲 Instalar DondeJoseito</h2>
+        <h2> Instalar DondeJoseito</h2>
       </div>
       <div class="modal-body">
         <p>Toca "Instalar App" en el siguiente diálogo para agregar DondeJoseito a tus aplicaciones.</p>
@@ -313,9 +254,7 @@
       <div class="modal-header">
         <h2>🛒 Tu Pedido</h2>
       </div>
-      <div class="modal-body" id="carrito-contenido">
-        <!-- Items del carrito se insertan aquí -->
-      </div>
+      <div class="modal-body" id="carrito-contenido"></div>
       <div class="modal-footer">
         <button class="btn-modal btn-secondary" onclick="cerrarModal('modal-carrito')">Volver al Menú</button>
         <button class="btn-modal btn-success" id="btn-finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
@@ -329,18 +268,83 @@
 
     let seleccionados = {};
     let deferredPrompt;
+    let appInstalada = false;
 
-    // Detectar si es iOS
+    // Detectar si la app ya está instalada (modo standalone)
+    function detectarModoInstalacion() {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+      const isIOSStandalone = window.navigator.standalone === true;
+      const isFullscreen = window.matchMedia('(display-mode: fullscreen)').matches;
+      
+      return isStandalone || isIOSStandalone || isFullscreen;
+    }
+
+    // Actualizar el botón según el estado
+    function actualizarBotonAccion() {
+      const btn = document.getElementById('btn-accion');
+      
+      if (detectarModoInstalacion()) {
+        // Ya está instalada → mostrar botón de compartir
+        btn.innerHTML = '';
+        btn.title = 'Compartir app';
+        appInstalada = true;
+      } else {
+        // No está instalada → mostrar botón de instalar
+        btn.innerHTML = '';
+        btn.title = 'Instalar App';
+        appInstalada = false;
+      }
+    }
+
+    // Acción del botón superior derecho
+    function accionTopRight() {
+      if (appInstalada) {
+        compartirApp();
+      } else {
+        mostrarGuiaInstalacion();
+      }
+    }
+
+    // Función de compartir
+    async function compartirApp() {
+      const shareData = {
+        title: 'DondeJoseito FastFood',
+        text: '¡Mira este menú de comida rápida! 🍟',
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+          console.log('Contenido compartido exitosamente');
+        } else {
+          // Fallback: copiar al portapapeles
+          await navigator.clipboard.writeText(window.location.href);
+          alert('🔗 Enlace copiado al portapapeles:\n' + window.location.href);
+        }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error al compartir:', err);
+          // Fallback final
+          const input = document.createElement('input');
+          input.value = window.location.href;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand('copy');
+          document.body.removeChild(input);
+          alert(' Enlace copiado:\n' + window.location.href);
+        }
+      }
+    }
+
     function esIOS() {
       return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     }
 
-    // Detectar si es Android
     function esAndroid() {
       return /Android/.test(navigator.userAgent);
     }
 
-    // Mostrar guía de instalación
     function mostrarGuiaInstalacion() {
       if (esIOS()) {
         document.getElementById('modal-instalacion').style.display = 'block';
@@ -361,18 +365,19 @@
       }
     }
 
-    // Cerrar modal
     function cerrarModal(id) {
       document.getElementById(id).style.display = 'none';
     }
 
-    // Instalar app (PWA)
     function instalarApp() {
       if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
             console.log('Usuario aceptó la instalación');
+            setTimeout(() => {
+              actualizarBotonAccion();
+            }, 1000);
           }
           deferredPrompt = null;
           cerrarModal('modal-instalacion-android');
@@ -380,13 +385,18 @@
       }
     }
 
-    // Capturar evento beforeinstallprompt
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
+      console.log('Evento beforeinstallprompt capturado');
     });
 
-    // Abrir carrito
+    // Detectar cuando la app se instala
+    window.addEventListener('appinstalled', (e) => {
+      console.log('App instalada exitosamente');
+      actualizarBotonAccion();
+    });
+
     function abrirCarrito() {
       const items = Object.values(seleccionados);
       
@@ -427,14 +437,12 @@
       document.getElementById('modal-carrito').style.display = 'block';
     }
 
-    // Eliminar item del carrito
     function eliminarItem(nombre) {
       delete seleccionados[nombre];
       actualizarPedido();
-      abrirCarrito(); // Refrescar el modal
+      abrirCarrito();
     }
 
-    // Finalizar pedido
     function finalizarPedido() {
       const items = Object.values(seleccionados);
       
@@ -534,13 +542,14 @@
       contadorDiv.style.display = "flex";
     }
 
-    // Cerrar modales al hacer clic fuera
     window.onclick = function(event) {
       if (event.target.classList.contains('modal')) {
         event.target.style.display = "none";
       }
     }
 
+    // Inicializar
+    actualizarBotonAccion();
     loadMenu();
   </script>
   <script>
@@ -552,7 +561,7 @@
                 .select-btn { display: none !important; }
                 .cantidad { display: none !important; }
                 #contador-carrito { display: none !important; }
-                .btn-instalar { display: none !important; }
+                .btn-top-right { display: none !important; }
             `;
             document.head.appendChild(style);
             console.log('Modo mesa: elementos de pedido ocultos via CSS');
