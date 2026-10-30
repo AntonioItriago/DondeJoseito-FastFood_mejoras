@@ -12,7 +12,7 @@
       background-size: cover;
       margin: 0;
       padding: 0;
-      padding-bottom: 80px; /* Espacio para que el botón flotante no tape contenido */
+      padding-bottom: 80px;
     }
     h1 {
       text-align: center;
@@ -31,13 +31,12 @@
       overflow-x: auto;
       scroll-behavior: smooth;
     }
-    /* Ocultar barra de desplazamiento en el carrusel */
     .carousel::-webkit-scrollbar {
       display: none;
     }
     .carousel {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
     .item {
       flex: 0 0 auto;
@@ -69,12 +68,11 @@
       font-size: 0.9em;
     }
 
-    /* Estilos para el botón flotante */
     #carrito-flotante {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #25D366; /* Color WhatsApp */
+      background: #25D366;
       color: #fff;
       border-radius: 50%;
       width: 60px;
@@ -87,6 +85,8 @@
       font-size: 24px;
       z-index: 1000;
       transition: transform 0.2s;
+      cursor: pointer;
+      border: none;
     }
 
     #carrito-flotante:active {
@@ -103,35 +103,362 @@
       width: 22px;
       height: 22px;
       font-size: 14px;
-      display: none; /* Se oculta si es 0 */
+      display: none;
       align-items: center;
       justify-content: center;
       font-weight: bold;
     }
 
-    /* Ocultamos el botón de pedir original */
     #pedido {
       display: none;
     }
 
+    /* Modal de instalación */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background: #1a1a1a;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      color: #fff;
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 10px 0;
+    }
+
+    .modal-body {
+      line-height: 1.6;
+    }
+
+    .modal-body ol {
+      padding-left: 20px;
+    }
+
+    .modal-body li {
+      margin: 10px 0;
+    }
+
+    .modal-footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn-modal {
+      padding: 12px 24px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background: #ff9800;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #666;
+      color: #fff;
+    }
+
+    .btn-success {
+      background: #25D366;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: #ff4444;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+
+    /* Modal del carrito */
+    .carrito-item {
+      background: rgba(255,255,255,0.1);
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .carrito-item-info {
+      flex: 1;
+    }
+
+    .carrito-item-nombre {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .carrito-item-cantidad {
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    .carrito-total {
+      text-align: right;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin: 20px 0;
+      padding-top: 15px;
+      border-top: 2px solid #ff9800;
+    }
+
+    .btn-instalar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ff9800;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .btn-instalar:active {
+      transform: scale(0.9);
+    }
   </style>
 </head>
 <body>
   <h1>🍔 DondeJoseito FastFood</h1>
+  
+  <button class="btn-instalar" onclick="mostrarGuiaInstalacion()" title="Instalar App">📲</button>
+  
   <div id="menu"></div>
   
-  <a id="carrito-flotante" href="#" target="_blank">
-    🛒
+  <button id="carrito-flotante" onclick="abrirCarrito()">
+    
     <div id="contador-carrito">0</div>
-  </a>
+  </button>
 
-  <a id="pedido" href="#" target="_blank">📲 Pedir</a>
+  <a id="pedido" href="#" target="_blank"> Pedir</a>
+
+  <!-- Modal de Guía de Instalación -->
+  <div id="modal-instalacion" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2> Instalación en iPhone</h2>
+      </div>
+      <div class="modal-body">
+        <p>Lamentamos informarte que en dispositivos iPhone no es posible instalar la aplicación automáticamente como en Android, debido a restricciones del sistema iOS.</p>
+        <p>Pero no te preocupes, te guiaremos paso a paso para que puedas tener DondeJoseito en tu pantalla de inicio en menos de 30 segundos.</p>
+        <h3>🍣 Guía de Instalación</h3>
+        <p>Sigue estos pasos sencillos:</p>
+        <ol>
+          <li>Asegúrate de estar usando <strong>Safari</strong> (no Chrome)</li>
+          <li>Toca el botón <strong>Compartir ⬆️</strong> (abajo en el centro)</li>
+          <li>Desliza hacia abajo y toca <strong>"Agregar a pantalla de inicio"</strong></li>
+          <li>Confirma tocando <strong>"Agregar"</strong> arriba a la derecha</li>
+        </ol>
+        <p>✅ ¡Listo! Tendrás DondeJoseito como una app en tu teléfono</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal btn-primary" onclick="cerrarModal('modal-instalacion')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Instalación Android -->
+  <div id="modal-instalacion-android" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>📲 Instalar DondeJoseito</h2>
+      </div>
+      <div class="modal-body">
+        <p>Toca "Instalar App" en el siguiente diálogo para agregar DondeJoseito a tus aplicaciones.</p>
+        <p>La app se abrirá en pantalla completa y funcionará sin la barra del navegador.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal btn-secondary" onclick="cerrarModal('modal-instalacion-android')">Ahora no</button>
+        <button class="btn-modal btn-success" onclick="instalarApp()">Instalar App</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal del Carrito -->
+  <div id="modal-carrito" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🛒 Tu Pedido</h2>
+      </div>
+      <div class="modal-body" id="carrito-contenido">
+        <!-- Items del carrito se insertan aquí -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-modal btn-secondary" onclick="cerrarModal('modal-carrito')">Volver al Menú</button>
+        <button class="btn-modal btn-success" id="btn-finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQCxfiHazYD630xd4zsBuUO4HV_Yzy0bpPz8DUSC4CXzuCCTRhNa4D49XuTLTUcUXci-Guv1Xl4tcQr/pub?gid=1078866454&single=true&output=tsv";
-    const numeroWhatsApp = "584128380827"; // número en formato internacional
+    const numeroWhatsApp = "584128380827";
 
     let seleccionados = {};
+    let deferredPrompt;
+
+    // Detectar si es iOS
+    function esIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    // Detectar si es Android
+    function esAndroid() {
+      return /Android/.test(navigator.userAgent);
+    }
+
+    // Mostrar guía de instalación
+    function mostrarGuiaInstalacion() {
+      if (esIOS()) {
+        document.getElementById('modal-instalacion').style.display = 'block';
+      } else if (esAndroid()) {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('Usuario aceptó la instalación');
+            }
+            deferredPrompt = null;
+          });
+        } else {
+          document.getElementById('modal-instalacion-android').style.display = 'block';
+        }
+      } else {
+        document.getElementById('modal-instalacion').style.display = 'block';
+      }
+    }
+
+    // Cerrar modal
+    function cerrarModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    // Instalar app (PWA)
+    function instalarApp() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Usuario aceptó la instalación');
+          }
+          deferredPrompt = null;
+          cerrarModal('modal-instalacion-android');
+        });
+      }
+    }
+
+    // Capturar evento beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    // Abrir carrito
+    function abrirCarrito() {
+      const items = Object.values(seleccionados);
+      
+      if (items.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+      }
+
+      const contenido = document.getElementById('carrito-contenido');
+      contenido.innerHTML = '';
+
+      let total = 0;
+      let moneda = '';
+
+      items.forEach(i => {
+        const subtotal = parseFloat(i.item.price) * i.cantidad;
+        total += subtotal;
+        moneda = i.item.currency;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'carrito-item';
+        itemDiv.innerHTML = `
+          <div class="carrito-item-info">
+            <div class="carrito-item-nombre">${i.item.name}</div>
+            <div class="carrito-item-cantidad">Cantidad: ${i.cantidad} × ${i.item.price} ${i.item.currency}</div>
+            <div class="carrito-item-cantidad">Subtotal: ${subtotal.toFixed(2)} ${i.item.currency}</div>
+          </div>
+          <button class="btn-modal btn-danger" onclick="eliminarItem('${i.item.name}')">🗑️</button>
+        `;
+        contenido.appendChild(itemDiv);
+      });
+
+      const totalDiv = document.createElement('div');
+      totalDiv.className = 'carrito-total';
+      totalDiv.innerHTML = `Total a Pagar: $${total.toFixed(2)} ${moneda}`;
+      contenido.appendChild(totalDiv);
+
+      document.getElementById('modal-carrito').style.display = 'block';
+    }
+
+    // Eliminar item del carrito
+    function eliminarItem(nombre) {
+      delete seleccionados[nombre];
+      actualizarPedido();
+      abrirCarrito(); // Refrescar el modal
+    }
+
+    // Finalizar pedido
+    function finalizarPedido() {
+      const items = Object.values(seleccionados);
+      
+      if (items.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+      }
+
+      let total = 0;
+      let detalle = "";
+      let moneda = '';
+
+      items.forEach(i => {
+        const subtotal = parseFloat(i.item.price) * i.cantidad;
+        total += subtotal;
+        moneda = i.item.currency;
+        detalle += `- ${i.item.name} ×${i.cantidad} → ${subtotal.toFixed(2)} ${i.item.currency}\n`;
+      });
+
+      const mensaje = `¡Hola, Joseito! Quiero realizar un pedido:\n\n${detalle}\n*TOTAL ESTIMADO:* ${total.toFixed(2)} ${moneda}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
+
+      const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+      
+      cerrarModal('modal-carrito');
+    }
 
     async function loadMenu() {
       try {
@@ -191,59 +518,44 @@
     }
 
     function actualizarPedido() {
-      const carritoBtn = document.getElementById("carrito-flotante");
       const contadorDiv = document.getElementById("contador-carrito");
       const items = Object.values(seleccionados);
       
-      // Actualizar el contador flotante
       const totalProductos = items.reduce((a, b) => a + b.cantidad, 0);
       
       if(totalProductos === 0) {
-        carritoBtn.href = "#";
         contadorDiv.style.display = "none";
         return;
       }
 
       contadorDiv.textContent = totalProductos;
       contadorDiv.style.display = "flex";
+    }
 
-      let total = 0;
-      let detalle = "";
-
-      items.forEach(i => {
-        const subtotal = parseFloat(i.item.price) * i.cantidad;
-        total += subtotal;
-        detalle += `- ${i.item.name} ×${i.cantidad} → ${subtotal.toFixed(2)} ${i.item.currency}\n`;
-      });
-
-      const mensaje = `¡Hola, Joseito! Quiero realizar un pedido:\n\n${detalle}\n*TOTAL ESTIMADO:* ${total.toFixed(2)} ${items[0].item.currency}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
-
-      const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-      carritoBtn.href = url;
+    // Cerrar modales al hacer clic fuera
+    window.onclick = function(event) {
+      if (event.target.classList.contains('modal')) {
+        event.target.style.display = "none";
+      }
     }
 
     loadMenu();
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Verificar si la URL contiene "mesa"
         if (window.location.href.includes('mesa')) {
-            
-            // Crear una etiqueta <style> con reglas CSS que oculten los elementos
             const style = document.createElement('style');
             style.textContent = `
                 #carrito-flotante { display: none !important; }
                 .select-btn { display: none !important; }
                 .cantidad { display: none !important; }
                 #contador-carrito { display: none !important; }
+                .btn-instalar { display: none !important; }
             `;
-            
-            // Agregar la etiqueta <style> al <head>
             document.head.appendChild(style);
-            
             console.log('Modo mesa: elementos de pedido ocultos via CSS');
         }
     });
-</script>
+  </script>
 </body>
 </html>
