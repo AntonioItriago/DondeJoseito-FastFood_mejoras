@@ -187,29 +187,30 @@
 
     /* 🆕 Banner flotante de instalación */
     #banner-instalar {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background: linear-gradient(135deg, #ff9800, #ff5722);
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: 50px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      display: none;
-      align-items: center;
-      gap: 10px;
-      z-index: 1500;
-      max-width: 90%;
-      font-size: 14px;
-      opacity: 0;
-      transition: all 0.4s ease;
-    }
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: linear-gradient(135deg, #ff9800, #ff5722);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  display: none;
+  align-items: center;
+  gap: 10px;
+  z-index: 1500;
+  max-width: 90%;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
     #banner-instalar.visible {
-      display: flex;
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
+  display: flex;
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
     #banner-instalar .banner-texto {
       flex: 1;
       font-weight: bold;
@@ -324,7 +325,7 @@
     let deferredPrompt;
     let appInstalada = false;
     let bannerTimer = null;
-    let bannerCountdown = 15;
+    let bannerCountdown = 30;
 
     function detectarModoInstalacion() {
       return window.matchMedia('(display-mode: standalone)').matches ||
