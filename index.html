@@ -438,10 +438,14 @@
     }
 
     function eliminarItem(nombre) {
-      delete seleccionados[nombre];
-      actualizarPedido();
-      abrirCarrito();
-    }
+  // Si existe y tenemos la referencia, ponerlo en 0
+  if (seleccionados[nombre] && seleccionados[nombre].cantidadDiv) {
+    seleccionados[nombre].cantidadDiv.textContent = "Cantidad: 0";
+  }
+  delete seleccionados[nombre];
+  actualizarPedido();
+  abrirCarrito(); // Refrescar el modal
+}
 
     function finalizarPedido() {
       const items = Object.values(seleccionados);
@@ -525,6 +529,13 @@
         document.getElementById("menu").innerHTML = "Error cargando menú 😢";
         console.error(err);
       }
+      btn.addEventListener("click", () => {
+  // Guardamos la referencia al div de la cantidad
+  if(!seleccionados[item.name]) seleccionados[item.name] = {item, cantidad:0, cantidadDiv: cantidadDiv};
+  seleccionados[item.name].cantidad++;
+  cantidadDiv.textContent = "Cantidad: " + seleccionados[item.name].cantidad;
+  actualizarPedido();
+});
     }
 
     function actualizarPedido() {
