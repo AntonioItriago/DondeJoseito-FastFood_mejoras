@@ -69,7 +69,6 @@
       border-radius: 50%;
       width: 60px;
       height: 60px;
-      text-decoration: none;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
@@ -100,7 +99,6 @@
 
     #pedido { display: none; }
 
-    /* Modal de instalación */
     .modal {
       display: none;
       position: fixed;
@@ -167,7 +165,6 @@
       border-top: 2px solid #ff9800;
     }
 
-    /* Botón superior derecho (Instalar/Compartir) */
     .btn-top-right {
       position: fixed;
       top: 20px;
@@ -192,10 +189,7 @@
 <body>
   <h1>🍔 DondeJoseito FastFood</h1>
   
-  <!-- Botón dinámico: Instalar o Compartir -->
-  <button class="btn-top-right" id="btn-accion" onclick="accionTopRight()" title="Instalar/Compartir">
-    
-  </button>
+  <button class="btn-top-right" id="btn-accion" onclick="accionTopRight()" title="Instalar/Compartir">📲</button>
   
   <div id="menu"></div>
   
@@ -206,24 +200,20 @@
 
   <a id="pedido" href="#" target="_blank">📲 Pedir</a>
 
-  <!-- Modal de Guía de Instalación iOS -->
+  <!-- Modal iOS -->
   <div id="modal-instalacion" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>📱 Instalación en iPhone</h2>
-      </div>
+      <div class="modal-header"><h2>📱 Instalación en iPhone</h2></div>
       <div class="modal-body">
-        <p>Lamentamos informarte que en dispositivos iPhone no es posible instalar la aplicación automáticamente como en Android, debido a restricciones del sistema iOS.</p>
-        <p>Pero no te preocupes, te guiaremos paso a paso para que puedas tener DondeJoseito en tu pantalla de inicio en menos de 30 segundos.</p>
+        <p>En iPhone no es posible instalar la app automáticamente. Sigue estos pasos:</p>
         <h3>🍣 Guía de Instalación</h3>
-        <p>Sigue estos pasos sencillos:</p>
         <ol>
-          <li>Asegúrate de estar usando <strong>Safari</strong> (no Chrome)</li>
-          <li>Toca el botón <strong>Compartir ⬆️</strong> (abajo en el centro)</li>
-          <li>Desliza hacia abajo y toca <strong>"Agregar a pantalla de inicio"</strong></li>
-          <li>Confirma tocando <strong>"Agregar"</strong> arriba a la derecha</li>
+          <li>Usa <strong>Safari</strong> (no Chrome)</li>
+          <li>Toca <strong>Compartir ⬆️</strong> (abajo al centro)</li>
+          <li>Toca <strong>"Agregar a pantalla de inicio"</strong></li>
+          <li>Confirma con <strong>"Agregar"</strong></li>
         </ol>
-        <p>✅ ¡Listo! Tendrás DondeJoseito como una app en tu teléfono</p>
+        <p>✅ ¡Listo! Tendrás DondeJoseito como app.</p>
       </div>
       <div class="modal-footer">
         <button class="btn-modal btn-primary" onclick="cerrarModal('modal-instalacion')">Entendido</button>
@@ -231,15 +221,13 @@
     </div>
   </div>
 
-  <!-- Modal de Instalación Android -->
+  <!-- Modal Android -->
   <div id="modal-instalacion-android" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2> Instalar DondeJoseito</h2>
-      </div>
+      <div class="modal-header"><h2>📲 Instalar DondeJoseito</h2></div>
       <div class="modal-body">
-        <p>Toca "Instalar App" en el siguiente diálogo para agregar DondeJoseito a tus aplicaciones.</p>
-        <p>La app se abrirá en pantalla completa y funcionará sin la barra del navegador.</p>
+        <p>Toca "Instalar App" para agregar DondeJoseito a tus aplicaciones.</p>
+        <p>Se abrirá en pantalla completa sin barra del navegador.</p>
       </div>
       <div class="modal-footer">
         <button class="btn-modal btn-secondary" onclick="cerrarModal('modal-instalacion-android')">Ahora no</button>
@@ -248,16 +236,14 @@
     </div>
   </div>
 
-  <!-- Modal del Carrito -->
+  <!-- Modal Carrito -->
   <div id="modal-carrito" class="modal">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>🛒 Tu Pedido</h2>
-      </div>
+      <div class="modal-header"><h2>🛒 Tu Pedido</h2></div>
       <div class="modal-body" id="carrito-contenido"></div>
       <div class="modal-footer">
         <button class="btn-modal btn-secondary" onclick="cerrarModal('modal-carrito')">Volver al Menú</button>
-        <button class="btn-modal btn-success" id="btn-finalizar" onclick="finalizarPedido()">Finalizar Pedido</button>
+        <button class="btn-modal btn-success" onclick="finalizarPedido()">Finalizar Pedido</button>
       </div>
     </div>
   </div>
@@ -270,33 +256,25 @@
     let deferredPrompt;
     let appInstalada = false;
 
-    // Detectar si la app ya está instalada (modo standalone)
     function detectarModoInstalacion() {
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      const isIOSStandalone = window.navigator.standalone === true;
-      const isFullscreen = window.matchMedia('(display-mode: fullscreen)').matches;
-      
-      return isStandalone || isIOSStandalone || isFullscreen;
+      return window.matchMedia('(display-mode: standalone)').matches ||
+             window.navigator.standalone === true ||
+             window.matchMedia('(display-mode: fullscreen)').matches;
     }
 
-    // Actualizar el botón según el estado
     function actualizarBotonAccion() {
       const btn = document.getElementById('btn-accion');
-      
       if (detectarModoInstalacion()) {
-        // Ya está instalada → mostrar botón de compartir
-        btn.innerHTML = '';
+        btn.innerHTML = '📤';
         btn.title = 'Compartir app';
         appInstalada = true;
       } else {
-        // No está instalada → mostrar botón de instalar
-        btn.innerHTML = '';
+        btn.innerHTML = '📲';
         btn.title = 'Instalar App';
         appInstalada = false;
       }
     }
 
-    // Acción del botón superior derecho
     function accionTopRight() {
       if (appInstalada) {
         compartirApp();
@@ -305,34 +283,22 @@
       }
     }
 
-    // Función de compartir
     async function compartirApp() {
       const shareData = {
         title: 'DondeJoseito FastFood',
         text: '¡Mira este menú de comida rápida! 🍟',
         url: window.location.href
       };
-
       try {
         if (navigator.share) {
           await navigator.share(shareData);
-          console.log('Contenido compartido exitosamente');
         } else {
-          // Fallback: copiar al portapapeles
           await navigator.clipboard.writeText(window.location.href);
-          alert('🔗 Enlace copiado al portapapeles:\n' + window.location.href);
+          alert('🔗 Enlace copiado al portapapeles');
         }
       } catch (err) {
         if (err.name !== 'AbortError') {
-          console.error('Error al compartir:', err);
-          // Fallback final
-          const input = document.createElement('input');
-          input.value = window.location.href;
-          document.body.appendChild(input);
-          input.select();
-          document.execCommand('copy');
-          document.body.removeChild(input);
-          alert(' Enlace copiado:\n' + window.location.href);
+          alert('🔗 Enlace: ' + window.location.href);
         }
       }
     }
@@ -374,10 +340,7 @@
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            console.log('Usuario aceptó la instalación');
-            setTimeout(() => {
-              actualizarBotonAccion();
-            }, 1000);
+            setTimeout(() => actualizarBotonAccion(), 1000);
           }
           deferredPrompt = null;
           cerrarModal('modal-instalacion-android');
@@ -388,18 +351,14 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      console.log('Evento beforeinstallprompt capturado');
     });
 
-    // Detectar cuando la app se instala
-    window.addEventListener('appinstalled', (e) => {
-      console.log('App instalada exitosamente');
+    window.addEventListener('appinstalled', () => {
       actualizarBotonAccion();
     });
 
     function abrirCarrito() {
       const items = Object.values(seleccionados);
-      
       if (items.length === 0) {
         alert('Tu carrito está vacío');
         return;
@@ -431,25 +390,24 @@
 
       const totalDiv = document.createElement('div');
       totalDiv.className = 'carrito-total';
-      totalDiv.innerHTML = `Total a Pagar: $${total.toFixed(2)} ${moneda}`;
+      totalDiv.innerHTML = `Total a Pagar: ${total.toFixed(2)} ${moneda}`;
       contenido.appendChild(totalDiv);
 
       document.getElementById('modal-carrito').style.display = 'block';
     }
 
     function eliminarItem(nombre) {
-  // Si existe y tenemos la referencia, ponerlo en 0
-  if (seleccionados[nombre] && seleccionados[nombre].cantidadDiv) {
-    seleccionados[nombre].cantidadDiv.textContent = "Cantidad: 0";
-  }
-  delete seleccionados[nombre];
-  actualizarPedido();
-  abrirCarrito(); // Refrescar el modal
-}
+      // ✅ CORRECCIÓN: Resetear contador en el menú ANTES de borrar
+      if (seleccionados[nombre] && seleccionados[nombre].cantidadDiv) {
+        seleccionados[nombre].cantidadDiv.textContent = "Cantidad: 0";
+      }
+      delete seleccionados[nombre];
+      actualizarPedido();
+      abrirCarrito();
+    }
 
     function finalizarPedido() {
       const items = Object.values(seleccionados);
-      
       if (items.length === 0) {
         alert('Tu carrito está vacío');
         return;
@@ -486,7 +444,6 @@
         data.forEach(row => {
           const item = {};
           headers.forEach((h,i) => item[h] = row[i]);
-
           if(!categorias[item.category]) categorias[item.category] = [];
           categorias[item.category].push(item);
         });
@@ -513,8 +470,11 @@
             const btn = div.querySelector(".select-btn");
             const cantidadDiv = div.querySelector(".cantidad");
 
+            // ✅ CORRECCIÓN: Guardar referencia a cantidadDiv
             btn.addEventListener("click", () => {
-              if(!seleccionados[item.name]) seleccionados[item.name] = {item, cantidad:0};
+              if(!seleccionados[item.name]) {
+                seleccionados[item.name] = {item, cantidad: 0, cantidadDiv: cantidadDiv};
+              }
               seleccionados[item.name].cantidad++;
               cantidadDiv.textContent = "Cantidad: " + seleccionados[item.name].cantidad;
               actualizarPedido();
@@ -529,28 +489,21 @@
         document.getElementById("menu").innerHTML = "Error cargando menú 😢";
         console.error(err);
       }
-      btn.addEventListener("click", () => {
-  // Guardamos la referencia al div de la cantidad
-  if(!seleccionados[item.name]) seleccionados[item.name] = {item, cantidad:0, cantidadDiv: cantidadDiv};
-  seleccionados[item.name].cantidad++;
-  cantidadDiv.textContent = "Cantidad: " + seleccionados[item.name].cantidad;
-  actualizarPedido();
-});
     }
 
+    // ✅ CORRECCIÓN: Actualización correcta del contador
     function actualizarPedido() {
       const contadorDiv = document.getElementById("contador-carrito");
       const items = Object.values(seleccionados);
-      
       const totalProductos = items.reduce((a, b) => a + b.cantidad, 0);
       
       if(totalProductos === 0) {
         contadorDiv.style.display = "none";
-        return;
+        contadorDiv.textContent = "0";
+      } else {
+        contadorDiv.textContent = totalProductos;
+        contadorDiv.style.display = "flex";
       }
-
-      contadorDiv.textContent = totalProductos;
-      contadorDiv.style.display = "flex";
     }
 
     window.onclick = function(event) {
@@ -559,24 +512,22 @@
       }
     }
 
-    // Inicializar
     actualizarBotonAccion();
     loadMenu();
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-        if (window.location.href.includes('mesa')) {
-            const style = document.createElement('style');
-            style.textContent = `
-                #carrito-flotante { display: none !important; }
-                .select-btn { display: none !important; }
-                .cantidad { display: none !important; }
-                #contador-carrito { display: none !important; }
-                .btn-top-right { display: none !important; }
-            `;
-            document.head.appendChild(style);
-            console.log('Modo mesa: elementos de pedido ocultos via CSS');
-        }
+      if (window.location.href.includes('mesa')) {
+        const style = document.createElement('style');
+        style.textContent = `
+          #carrito-flotante { display: none !important; }
+          .select-btn { display: none !important; }
+          .cantidad { display: none !important; }
+          #contador-carrito { display: none !important; }
+          .btn-top-right { display: none !important; }
+        `;
+        document.head.appendChild(style);
+      }
     });
   </script>
 </body>
